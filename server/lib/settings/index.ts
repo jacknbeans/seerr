@@ -56,6 +56,25 @@ export interface JellyfinSettings {
   serverId: string;
   apiKey: string;
 }
+
+export type OidcProvider = {
+  slug: string;
+  name: string;
+  issuerUrl: string;
+  clientId: string;
+  clientSecret: string;
+  logo?: string;
+  requiredClaims?: string;
+  scopes?: string;
+  newUserLogin?: boolean;
+};
+
+export type PublicOidcProvider = Pick<OidcProvider, 'slug' | 'name' | 'logo'>;
+
+export interface OidcSettings {
+  providers: OidcProvider[];
+}
+
 export interface TautulliSettings {
   hostname?: string;
   port?: number;
@@ -143,6 +162,7 @@ export interface MainSettings {
   hideBlocklisted: boolean;
   localLogin: boolean;
   mediaServerLogin: boolean;
+  oidcLogin: boolean;
   newPlexLogin: boolean;
   discoverRegion: string;
   streamingRegion: string;
@@ -215,6 +235,7 @@ interface FullPublicSettings extends PublicSettings {
   newPlexLogin: boolean;
   youtubeUrl: string;
   plexClientIdentifier: string;
+  openIdProviders: PublicOidcProvider[];
 }
 
 export interface NotificationAgentConfig {
@@ -377,6 +398,7 @@ export interface AllSettings {
   main: MainSettings;
   plex: PlexSettings;
   jellyfin: JellyfinSettings;
+  oidc: OidcSettings;
   tautulli: TautulliSettings;
   radarr: RadarrSettings[];
   sonarr: SonarrSettings[];
@@ -416,6 +438,7 @@ class Settings {
         hideBlocklisted: false,
         localLogin: true,
         mediaServerLogin: true,
+        oidcLogin: false,
         newPlexLogin: true,
         discoverRegion: '',
         streamingRegion: '',
@@ -448,6 +471,9 @@ class Settings {
         libraries: [],
         serverId: '',
         apiKey: '',
+      },
+      oidc: {
+        providers: [],
       },
       tautulli: {},
       metadataSettings: {
@@ -659,6 +685,14 @@ class Settings {
     this.data.jellyfin = mergeSettings(this.data.jellyfin, data);
   }
 
+  get oidc(): OidcSettings {
+    return this.data.oidc;
+  }
+
+  set oidc(data: OidcSettings) {
+    this.data.oidc = data;
+  }
+
   get tautulli(): TautulliSettings {
     return this.data.tautulli;
   }
@@ -735,6 +769,13 @@ class Settings {
       newPlexLogin: this.data.main.newPlexLogin,
       youtubeUrl: this.data.main.youtubeUrl,
       plexClientIdentifier: this.data.clientId,
+      openIdProviders: this.data.main.oidcLogin
+        ? this.data.oidc.providers.map((p) => ({
+            slug: p.slug,
+            name: p.name,
+            logo: p.logo,
+          }))
+        : [],
     };
   }
 
