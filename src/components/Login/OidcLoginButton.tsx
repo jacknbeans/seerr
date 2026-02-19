@@ -66,7 +66,11 @@ export default function OidcLoginButton({
   }, []);
 
   return (
-    <LoginButton loading={loading} onClick={() => redirectToLogin()}>
+    <LoginButton
+      loading={loading}
+      onClick={() => redirectToLogin()}
+      data-testid={`oidc-login-${provider.slug}`}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={provider.logo || '/images/openid.svg'}
