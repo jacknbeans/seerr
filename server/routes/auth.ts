@@ -539,7 +539,7 @@ authRoutes.post('/jellyfin', async (req, res, next) => {
 
       case ApiErrorCode.InvalidCredentials:
         logger.warn(
-          'Failed login attempt from user with incorrect Jellyfin credentials',
+          'Failed sign-in attempt from user with incorrect Jellyfin credentials',
           {
             label: 'Auth',
             account: {
@@ -556,7 +556,7 @@ authRoutes.post('/jellyfin', async (req, res, next) => {
 
       case ApiErrorCode.NotAdmin:
         logger.warn(
-          'Failed login attempt from user without admin permissions',
+          'Failed sign-in attempt from user without admin permissions',
           {
             label: 'Auth',
             account: {
@@ -572,7 +572,7 @@ authRoutes.post('/jellyfin', async (req, res, next) => {
 
       case ApiErrorCode.NoAdminUser:
         logger.warn(
-          'Failed login attempt from user without admin permissions and no admin user exists',
+          'Failed sign-in attempt from user without admin permissions and no admin user exists',
           {
             label: 'Auth',
             account: {
@@ -1019,9 +1019,11 @@ authRoutes.post('/logout', async (req, res, next) => {
             await axios.delete(`${baseUrl}/Devices`, {
               params: { Id: user.jellyfinDeviceId },
               headers: {
-                'X-Emby-Authorization': `MediaBrowser Client="Seerr", Device="Seerr", DeviceId="seerr", Version="${getAppVersion()}", Token="${
-                  settings.jellyfin.apiKey
-                }"`,
+                'X-Emby-Authorization': `MediaBrowser Client="Seerr", Device="Seerr", DeviceId="seerr", Version="${
+                  settings.main.mediaServerType === MediaServerType.EMBY
+                    ? '1.0.0'
+                    : getAppVersion()
+                }", Token="${settings.jellyfin.apiKey}"`,
               },
             });
           } catch (error) {
