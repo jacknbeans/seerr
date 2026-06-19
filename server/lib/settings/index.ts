@@ -70,6 +70,8 @@ export type OidcProvider = {
   logo?: string;
   requiredClaims?: string;
   scopes?: string;
+  roleClaim?: string;
+  userRoles?: string;
   newUserLogin?: boolean;
 };
 
@@ -717,6 +719,8 @@ class Settings {
         blocklistLanguage: '',
         blocklistedTags: '',
         blocklistedTagsLimit: 50,
+        blocklistRegion: '',
+        blocklistLanguage: '',
         mediaServerType: MediaServerType.NOT_CONFIGURED,
         partialRequestsEnabled: true,
         enableSpecialEpisodes: false,
