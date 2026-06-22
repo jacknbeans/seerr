@@ -1,9 +1,11 @@
 > [!TIP]
-> JACK!! To build, do the following:  
-> COMMIT_TAG=$(git rev-parse HEAD)  
-> BUILD_VERSION=feat/oidc-rbac-build  
-> TIMESTAMP=$(git log -1 --pretty=%ct)  
+> JACK!! To build, do the following:
+> ```zsh
+> COMMIT_TAG=$(git rev-parse HEAD)
+> BUILD_VERSION=feat/oidc-rbac-build
+> TIMESTAMP=$(git log -1 --pretty=%ct)
 > docker buildx build --platform linux/amd64 --tag personal/docker-seerr:latest-amd64 --build-arg COMMIT_TAG=$COMMIT_TAG --build-arg BUILD_VERSION=$BUILD_VERSION --build-arg SOURCE_DATE_EPOCH=$TIMESTAMP .
+> ```
 
 <p align="center">
 <img src="./public/logo_full.svg" alt="Seerr" style="margin: 20px 0;">
