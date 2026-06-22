@@ -719,8 +719,6 @@ class Settings {
         blocklistLanguage: '',
         blocklistedTags: '',
         blocklistedTagsLimit: 50,
-        blocklistRegion: '',
-        blocklistLanguage: '',
         mediaServerType: MediaServerType.NOT_CONFIGURED,
         partialRequestsEnabled: true,
         enableSpecialEpisodes: false,
@@ -774,7 +772,6 @@ class Settings {
               requireTls: false,
               allowSelfSigned: false,
               senderName: 'Seerr',
-              usePublicLogo: false,
             },
           },
           discord: {
@@ -785,8 +782,6 @@ class Settings {
               webhookUrl: '',
               webhookRoleId: '',
               enableMentions: true,
-              locale: 'en',
-              useUserLocale: true,
             },
           },
           slack: {
@@ -795,7 +790,6 @@ class Settings {
             types: 0,
             options: {
               webhookUrl: '',
-              locale: 'en',
             },
           },
           telegram: {
@@ -850,7 +844,6 @@ class Settings {
               url: '',
               token: '',
               priority: 0,
-              locale: 'en',
             },
           },
           ntfy: {
@@ -861,7 +854,6 @@ class Settings {
               url: '',
               topic: '',
               priority: 3,
-              locale: 'en',
             },
           },
         },
