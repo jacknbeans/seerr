@@ -2,7 +2,7 @@ import { MediaServerType } from '@server/constants/server';
 import { Permission } from '@server/lib/permissions';
 import { runMigrations } from '@server/lib/settings/migrator';
 import type { AvailableLocale } from '@server/types/languages';
-import { randomBytes, randomUUID } from 'crypto';
+import { randomUUID } from 'crypto';
 import fs from 'fs/promises';
 import { mergeWith } from 'lodash';
 import path from 'path';
@@ -536,6 +536,7 @@ class Settings {
         this.data.notifications.agents.email.options.userEmailRequired,
       newPlexLogin: this.data.main.newPlexLogin,
       youtubeUrl: this.data.main.youtubeUrl,
+      plexClientIdentifier: this.data.clientId,
       openIdProviders: this.data.main.oidcLogin
         ? this.data.oidc.providers.map((p) => ({
             slug: p.slug,
@@ -772,6 +773,7 @@ class Settings {
               requireTls: false,
               allowSelfSigned: false,
               senderName: 'Seerr',
+              usePublicLogo: false,
             },
           },
           discord: {
@@ -782,6 +784,8 @@ class Settings {
               webhookUrl: '',
               webhookRoleId: '',
               enableMentions: true,
+              locale: 'en',
+              useUserLocale: false,
             },
           },
           slack: {
@@ -790,6 +794,7 @@ class Settings {
             types: 0,
             options: {
               webhookUrl: '',
+              locale: 'en',
             },
           },
           telegram: {
@@ -844,6 +849,7 @@ class Settings {
               url: '',
               token: '',
               priority: 0,
+              locale: 'en',
             },
           },
           ntfy: {
@@ -854,6 +860,7 @@ class Settings {
               url: '',
               topic: '',
               priority: 3,
+              locale: 'en',
             },
           },
         },

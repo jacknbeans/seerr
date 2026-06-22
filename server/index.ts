@@ -209,7 +209,7 @@ app
     server.use(
       '/api',
       session({
-        secret: settings.sessionSecret,
+        secret: settings.clientId,
         resave: false,
         saveUninitialized: false,
         cookie: {

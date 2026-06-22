@@ -1,4 +1,3 @@
-import Alert from '@app/components/Common/Alert';
 import Button from '@app/components/Common/Button';
 import LabeledCheckbox from '@app/components/Common/LabeledCheckbox';
 import LoadingSpinner from '@app/components/Common/LoadingSpinner';
@@ -70,9 +69,13 @@ const SettingsUsers = () => {
     .test({
       name: 'atLeastOneAuth',
       test: function (values) {
-        const isValid = ['localLogin', 'mediaServerLogin', 'oidcLogin'].some(
-          (field) => !!values[field]
-        );
+        const isValid = (
+          [
+            'localLogin',
+            'mediaServerLogin',
+            'oidcLogin',
+          ] as (keyof typeof values)[]
+        ).some((field) => !!values[field]);
 
         if (isValid) return true;
         return this.createError({
